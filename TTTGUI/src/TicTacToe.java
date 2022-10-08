@@ -17,6 +17,7 @@ public class TicTacToe {
 
     private static final Font titleFont = new Font("Arial", 1, 20);
     private static final Font subTitleFont = new Font("Arial", 1, 15);
+    private static final Font bodyFont = new Font("Arial", 1, 11);
     private static final EmptyBorder padding = new EmptyBorder(10, 10, 10, 10);
 
     public enum Action {
@@ -188,24 +189,140 @@ public class TicTacToe {
         content.add(buttonPanel, BorderLayout.SOUTH);
 
         board = new Grid();
+        board.setPreferredSize(new Dimension(300,300));
+        board.setMaximumSize(new Dimension(300,300));
         content.add(board, BorderLayout.CENTER);
 
-        JLabel player1Stats = new JLabel(player1.toString());
-        player1Stats.setFont(subTitleFont);
-        JLabel player2Stats = new JLabel(player2.toString());
-        player2Stats.setFont(subTitleFont);
+        JPanel player1Stats = new JPanel(new GridLayout(0,1));
+        JLabel player1Name = new JLabel(player1.getName());
+        JLabel player1Wins = new JLabel(player1.getNumWins() + " Wins");
+        JLabel player1Losses = new JLabel(player1.getNumLosses() + " Losses");
+        JLabel player1Draws = new JLabel(player1.getNumDraws() + " Draws");
+        player1Name.setFont(titleFont);
+        player1Wins.setFont(titleFont);
+        player1Losses.setFont(titleFont);
+        player1Draws.setFont(titleFont);
+        player1Stats.add(player1Name);
+        player1Stats.add(player1Wins);
+        player1Stats.add(player1Losses);
+        player1Stats.add(player1Draws);
+        player1Stats.setAlignmentX(Component.LEFT_ALIGNMENT);
+        player1Stats.setBorder(padding);
+        player1Stats.setPreferredSize(new Dimension(150, 300));
+        player1Stats.setMaximumSize(new Dimension(150, 300));
+
+        JPanel player2Stats = new JPanel(new GridLayout(0,1));
+        JLabel player2Name = new JLabel(player2.getName());
+        JLabel player2Wins = new JLabel(player2.getNumWins() + " Wins");
+        JLabel player2Losses = new JLabel(player2.getNumLosses() + " Losses");
+        JLabel player2Draws = new JLabel(player2.getNumDraws() + " Draws");
+        player2Name.setFont(titleFont);
+        player2Wins.setFont(titleFont);
+        player2Losses.setFont(titleFont);
+        player2Draws.setFont(titleFont);
+        player2Stats.add(player2Name);
+        player2Stats.add(player2Wins);
+        player2Stats.add(player2Losses);
+        player2Stats.add(player2Draws);
+        player2Stats.setAlignmentX(Component.LEFT_ALIGNMENT);
+        player2Stats.setBorder(padding);
+        player2Stats.setPreferredSize(new Dimension(150, 300));
+        player2Stats.setMaximumSize(new Dimension(150, 300));
 
         content.add(player1Stats, BorderLayout.WEST);
         content.add(player2Stats, BorderLayout.EAST);
 
-        game.setTitle("PVP Game");
-        game.setSize(500, 500);
+        game.setTitle("PVP TicTacToe");
+        game.setSize(900, 700);
+        game.setResizable(false);
         game.setLocationRelativeTo(null);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setVisible(true);
     }
 
     public static void gamePVComp() {
+        JFrame game = new JFrame();
+        Container content = game.getContentPane();
+        content.setLayout(new BorderLayout());
+
+        JPanel header = new JPanel();
+        JLabel message;
+
+        if (player1.starts()) {
+            message = new JLabel("It's " + player1.getName() + "'s turn.");
+        } else {
+            message = new JLabel("It's " + player2.getName() + "'s turn.");
+        }
+        message.setFont(titleFont);
+        header.add(message);
+        content.add(header, BorderLayout.NORTH);
+
+        JAButton restart = new JAButton("Restart", Action.Restart);
+        JAButton gameConfigChange = new JAButton("Change Game Configuration", Action.ChangeGameConfig);
+        JAButton gameModeChange = new JAButton("Change Game Mode", Action.ChangeGameMode);
+        JAButton quitGame = new JAButton("Quit", Action.Quit);
+        restart.addActionListener(actionListener);
+        gameConfigChange.addActionListener(actionListener);
+        gameModeChange.addActionListener(actionListener);
+        quitGame.addActionListener(actionListener);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(restart);
+        buttonPanel.add(gameConfigChange);
+        buttonPanel.add(gameModeChange);
+        buttonPanel.add(quitGame);
+        content.add(buttonPanel, BorderLayout.SOUTH);
+
+        board = new Grid();
+        board.setPreferredSize(new Dimension(300,300));
+        board.setMaximumSize(new Dimension(300,300));
+        content.add(board, BorderLayout.CENTER);
+
+        JPanel player1Stats = new JPanel(new GridLayout(0,1));
+        JLabel player1Name = new JLabel(player1.getName());
+        JLabel player1Wins = new JLabel(player1.getNumWins() + " Wins");
+        JLabel player1Losses = new JLabel(player1.getNumLosses() + " Losses");
+        JLabel player1Draws = new JLabel(player1.getNumDraws() + " Draws");
+        player1Name.setFont(titleFont);
+        player1Wins.setFont(titleFont);
+        player1Losses.setFont(titleFont);
+        player1Draws.setFont(titleFont);
+        player1Stats.add(player1Name);
+        player1Stats.add(player1Wins);
+        player1Stats.add(player1Losses);
+        player1Stats.add(player1Draws);
+        player1Stats.setAlignmentX(Component.LEFT_ALIGNMENT);
+        player1Stats.setBorder(padding);
+        player1Stats.setPreferredSize(new Dimension(150, 300));
+        player1Stats.setMaximumSize(new Dimension(150, 300));
+
+        JPanel player2Stats = new JPanel(new GridLayout(0,1));
+        JLabel player2Name = new JLabel(player2.getName());
+        JLabel player2Wins = new JLabel(player2.getNumWins() + " Wins");
+        JLabel player2Losses = new JLabel(player2.getNumLosses() + " Losses");
+        JLabel player2Draws = new JLabel(player2.getNumDraws() + " Draws");
+        player2Name.setFont(titleFont);
+        player2Wins.setFont(titleFont);
+        player2Losses.setFont(titleFont);
+        player2Draws.setFont(titleFont);
+        player2Stats.add(player2Name);
+        player2Stats.add(player2Wins);
+        player2Stats.add(player2Losses);
+        player2Stats.add(player2Draws);
+        player2Stats.setAlignmentX(Component.LEFT_ALIGNMENT);
+        player2Stats.setBorder(padding);
+        player2Stats.setPreferredSize(new Dimension(150, 300));
+        player2Stats.setMaximumSize(new Dimension(150, 300));
+
+        content.add(player1Stats, BorderLayout.WEST);
+        content.add(player2Stats, BorderLayout.EAST);
+
+        game.setTitle("PVP TicTacToe");
+        game.setSize(900, 700);
+        game.setResizable(false);
+        game.setLocationRelativeTo(null);
+        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.setVisible(true);
     }
 
     public static void gameCompVComp() {

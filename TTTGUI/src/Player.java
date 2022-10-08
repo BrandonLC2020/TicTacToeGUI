@@ -26,7 +26,19 @@ public class Player {
     }
 
     public String toString() {
-        String result = name + "\nWins-Losses-Draws = " + numWins + "-" + numLosses + "-" + numDraws;
+        String result = name + ": " + numWins + "-" + numLosses + "-" + numDraws;
         return result;
+    }
+
+    public int getNumWins() {
+        return numWins;
+    }
+
+    public int getNumDraws() {
+        return numDraws;
+    }
+
+    public int getNumLosses() {
+        return numLosses;
     }
 }
