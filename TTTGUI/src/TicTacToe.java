@@ -15,6 +15,8 @@ public class TicTacToe {
 
     public static Player player2;
 
+    public static boolean isPlayer1Turn;
+
     private static final Font titleFont = new Font("Arial", 1, 20);
     private static final Font subTitleFont = new Font("Arial", 1, 15);
     private static final Font bodyFont = new Font("Arial", 1, 11);
@@ -27,7 +29,36 @@ public class TicTacToe {
     public static ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (e.getSource() instanceof JAButton) {
+                GridSpace gridButton = (GridSpace) e.getSource();
+                int gridIdentifier = gridButton.getIndentifer();
+                Action gridButtonAction = gridButton.getActionType();
+                if (gridButtonAction == Action.ChangeGridSpace) {
+                    String currMark = "";
+                    if (isPlayer1Turn) {
+                        if (player1.isX()) currMark = "X";
+                        else currMark = "O";
+                    } else {
+                        if (player2.isX()) currMark = "X";
+                        else currMark = "O";
+                    }
+                    State newState = State.EMPTY;
+                    if (currMark.equals("X")) {
+                        newState = State.X;
+                    } else {
+                        newState = State.O;
+                    }
 
+                    if (gridButton.getCurrentState() == State.EMPTY) {
+                        gridButton.setCurrentState(newState);
+                        board.updateGrid(gridIdentifier, gridButton);
+                    }
+
+                    isPlayer1Turn = !isPlayer1Turn;
+                }
+            } else if (e.getSource() instanceof JAButton) {
+
+            }
         }
     };
 
@@ -35,8 +66,8 @@ public class TicTacToe {
         int gameMode = -1;
         while (true) {
             int chooseGameMode = showStartMenu();
-            if ((chooseGameMode == 0 && configPVP()) || (chooseGameMode == 1 && configPVComp()) ||
-                    (chooseGameMode == 2 && configCompVComp())) {
+            if ((chooseGameMode == 2 && configPVP()) || (chooseGameMode == 1 && configPVComp()) ||
+                    (chooseGameMode == 0 && configCompVComp())) {
                 gameMode = chooseGameMode;
                 break;
             } else if (chooseGameMode == -1) {
@@ -44,11 +75,11 @@ public class TicTacToe {
             }
         }
         switch (gameMode) {
-            case 0:
+            case 2:
                 gamePVP();
             case 1:
                 gamePVComp();
-            case 2:
+            case 0:
                 gameCompVComp();
         }
     }
@@ -57,13 +88,13 @@ public class TicTacToe {
         String player1Name = JOptionPane.showInputDialog(null, "Enter Player 1's Name.", JOptionPane.QUESTION_MESSAGE);
         if (player1Name == null) return false;
 
-        String[] markOptions = { "X", "O" };
+        String[] markOptions = { "O", "X" };
         boolean player1IsX;
         int player1Mark = JOptionPane.showOptionDialog(null, "Choose Player 1's Mark.", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, markOptions, markOptions[0]);
-        if (player1Mark == 0) {
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, markOptions, null);
+        if (player1Mark == 1) {
             player1IsX = true;
-        } else if (player1Mark == 1) {
+        } else if (player1Mark == 0) {
             player1IsX = false;
         } else {
             return false;
@@ -72,18 +103,18 @@ public class TicTacToe {
         String player2Name = JOptionPane.showInputDialog(null, "Enter Player 2's Name.", JOptionPane.QUESTION_MESSAGE);
         if (player1Name == null) return false;
 
-        String[] startOptions = { "Player 1", "Player 2" };
+        String[] startOptions = { "Player 2", "Player 1" };
         boolean player1Starts;
         int startingPlayer = JOptionPane.showOptionDialog(null, "Which Player Goes First?", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, startOptions, startOptions[0]);
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, startOptions, null);
         if (startingPlayer == 0) {
-            player1Starts = true;
-        } else if (startingPlayer == 1) {
             player1Starts = false;
+        } else if (startingPlayer == 1) {
+            player1Starts = true;
         } else {
             return false;
         }
-
+        isPlayer1Turn = player1Starts;
         player1 = new Player(player1Name, false, player1IsX, player1Starts);
         player2 = new Player(player2Name, false, !player1IsX, !player1Starts);
 
@@ -117,7 +148,7 @@ public class TicTacToe {
         } else {
             return false;
         }
-
+        isPlayer1Turn = player1Starts;
         player1 = new Player(player1Name, false, player1IsX, player1Starts);
         player2 = new Player("Computer", true, !player1IsX, !player1Starts);
 
@@ -328,10 +359,10 @@ public class TicTacToe {
     public static void gameCompVComp() {
     }
     public static int showStartMenu() {
-        String[] options = {"Player vs. Player", "Player vs. Computer", "Computer vs. Computer Simulation"};
+        String[] options = {"Computer vs. Computer Simulation", "Player vs. Computer", "Player vs. Player"};
         int result = JOptionPane.showOptionDialog(null, "Choose what game mode do you want " +
                         "to play in?", "TTT Start Menu", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options[0]);
+                null, options, null);
         return result;
     }
 

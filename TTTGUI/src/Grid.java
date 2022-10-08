@@ -13,11 +13,18 @@ public class Grid extends JPanel {
         super();
         grid = new ArrayList<GridSpace>();
         for (int i = 0; i < 9; i++) {
-            GridSpace space = new GridSpace("", i);
-            space.addActionListener(TicTacToe.actionListener);
-            grid.add(space);
+            grid.add(new GridSpace("", i));
         }
+        fillGrid();
+    }
 
+    public void updateGrid(int i, GridSpace newGridSpace) {
+        grid.set(i, newGridSpace);
+        this.removeAll();
+        fillGrid();
+    }
+
+    private void fillGrid() {
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setLayout(new GridLayout(3, 3));
         GridSpace topLeft = grid.get(0);
@@ -52,7 +59,6 @@ public class Grid extends JPanel {
         this.setPreferredSize(new Dimension(300,300));
         this.setMaximumSize(new Dimension(300,300));
         this.setVisible(true);
-
     }
 
 

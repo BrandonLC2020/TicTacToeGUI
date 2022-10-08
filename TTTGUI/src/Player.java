@@ -41,4 +41,20 @@ public class Player {
     public int getNumLosses() {
         return numLosses;
     }
+
+    public void setNumWins(int numWins) {
+        this.numWins = numWins;
+    }
+
+    public void setNumLosses(int numLosses) {
+        this.numLosses = numLosses;
+    }
+
+    public void setNumDraws(int numDraws) {
+        this.numDraws = numDraws;
+    }
+
+    public boolean isX() {
+        return isX;
+    }
 }
