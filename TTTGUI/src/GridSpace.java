@@ -4,19 +4,45 @@ enum State {X, O, EMPTY};
 public class GridSpace extends JButton {
     private int indentifer;
     private State currentState;
-    public GridSpace(int indentifer) {
+
+    private TicTacToe.Action action;
+    public GridSpace(String text, int indentifer) {
+        super(text);
         this.indentifer = indentifer;
         this.currentState = State.EMPTY;
+        this.action = TicTacToe.Action.ChangeGridSpace;
     }
 
-    public GridSpace(int indentifer, State state) {
+    public GridSpace(String text, int indentifer, State state) {
+        super(text);
         this.indentifer = indentifer;
         this.currentState = state;
+        this.action = TicTacToe.Action.ChangeGridSpace;
     }
+
     public int getIndentifer() {
         return this.indentifer;
     }
+
+    public State getCurrentState() {
+        return this.currentState;
+    }
+
     public void setCurrentState(State state) {
         this.currentState = state;
+        switch (state) {
+            case O:
+                this.setText("O");
+            case X:
+                this.setText("X");
+            case EMPTY:
+                this.setText("");
+            default:
+                this.setText("");
+        }
+    }
+
+    public TicTacToe.Action getActionType() {
+        return this.action;
     }
 }
