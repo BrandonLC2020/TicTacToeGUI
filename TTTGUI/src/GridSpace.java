@@ -1,23 +1,21 @@
 import javax.swing.*;
 enum State {X, O, EMPTY};
 
-public class GridSpace extends JButton {
+public class GridSpace extends JAButton {
     private int indentifer;
     private State currentState;
 
     private TicTacToe.Action action;
     public GridSpace(String text, int indentifer) {
-        super(text);
+        super(text, TicTacToe.Action.ChangeGridSpace);
         this.indentifer = indentifer;
         this.currentState = State.EMPTY;
-        this.action = TicTacToe.Action.ChangeGridSpace;
     }
 
     public GridSpace(String text, int indentifer, State state) {
-        super(text);
+        super(text, TicTacToe.Action.ChangeGridSpace);
         this.indentifer = indentifer;
         this.currentState = state;
-        this.action = TicTacToe.Action.ChangeGridSpace;
     }
 
     public int getIndentifer() {

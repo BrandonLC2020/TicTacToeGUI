@@ -3,7 +3,6 @@ public class Player {
     private boolean isComputer;
     private boolean isX;
     private boolean starts;
-
     private int numWins;
     private int numDraws;
     private int numLosses;
@@ -16,5 +15,18 @@ public class Player {
         this.numWins = 0;
         this.numDraws = 0;
         this.numLosses = 0;
+    }
+
+    public boolean starts() {
+        return starts;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String toString() {
+        String result = name + "\nWins-Losses-Draws = " + numWins + "-" + numLosses + "-" + numDraws;
+        return result;
     }
 }
