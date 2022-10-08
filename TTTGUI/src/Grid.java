@@ -36,6 +36,8 @@ public class Grid extends JPanel {
         this.add(topRow, BorderLayout.NORTH);
         this.add(middleRow, BorderLayout.CENTER);
         this.add(bottomRow, BorderLayout.SOUTH);
+
+
     }
 
 
