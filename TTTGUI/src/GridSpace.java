@@ -4,8 +4,6 @@ enum State {X, O, EMPTY};
 public class GridSpace extends JAButton {
     private int indentifer;
     private State currentState;
-
-    private TicTacToe.Action action;
     public GridSpace(String text, int indentifer) {
         super(text, TicTacToe.Action.ChangeGridSpace);
         this.indentifer = indentifer;
