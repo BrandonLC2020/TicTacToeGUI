@@ -25,6 +25,7 @@ public class Grid extends JPanel {
     }
 
     public void resetGrid() {
+        this.setVisible(false);
         this.removeAll();
         grid = new ArrayList<GridSpace>();
         for (int i = 0; i < 9; i++) {

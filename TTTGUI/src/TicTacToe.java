@@ -3,10 +3,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 
 public class TicTacToe {
 
+    public static JFrame game;
+    public static JPanel header;
+    public static JLabel message;
     public static Grid board;
     public static Player player1;
     public static Player player2;
@@ -51,6 +55,19 @@ public class TicTacToe {
                         board.updateGrid(gridIdentifier, gridButton);
                     }
                     isPlayer1Turn = !isPlayer1Turn;
+
+                    if (isPlayer1Turn) {
+                        message.setText("It's " + player1.getName() + "'s turn.");
+                    } else {
+                        message.setText("It's " + player2.getName() + "'s turn.");
+                    }
+
+                    header.removeAll();
+                    header.add(message);
+                    game.add(header, BorderLayout.NORTH);
+
+
+
                 }
             } else if (e.getSource() instanceof JAButton) {
                 JAButton button = (JAButton) e.getSource();
@@ -58,6 +75,8 @@ public class TicTacToe {
                 if (buttonAction == Action.Restart) {
                     // reset player scores
                     board.resetGrid();
+                } else if (buttonAction == Action.Quit) {
+                    game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
                 }
             }
         }
@@ -188,13 +207,11 @@ public class TicTacToe {
     }
 
     public static void gamePVP() {
-        JFrame game = new JFrame();
+        game = new JFrame();
         Container content = game.getContentPane();
         content.setLayout(new BorderLayout());
 
-        JPanel header = new JPanel();
-        JLabel message;
-
+        header = new JPanel();
         if (player1.starts()) {
             message = new JLabel("It's " + player1.getName() + "'s turn.");
         } else {
@@ -273,7 +290,7 @@ public class TicTacToe {
     }
 
     public static void gamePVComp() {
-        JFrame game = new JFrame();
+        game = new JFrame();
         Container content = game.getContentPane();
         content.setLayout(new BorderLayout());
 
