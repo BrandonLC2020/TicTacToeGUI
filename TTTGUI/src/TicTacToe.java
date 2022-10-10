@@ -8,9 +8,7 @@ import java.awt.event.ActionListener;
 public class TicTacToe {
 
     public static Grid board;
-
     public static Player player1;
-
     public static Player player2;
 
     public static boolean isPlayer1Turn;
@@ -52,11 +50,15 @@ public class TicTacToe {
                         gridButton.setText(currMark);
                         board.updateGrid(gridIdentifier, gridButton);
                     }
-
                     isPlayer1Turn = !isPlayer1Turn;
                 }
             } else if (e.getSource() instanceof JAButton) {
-
+                JAButton button = (JAButton) e.getSource();
+                Action buttonAction = button.getActionType();
+                if (buttonAction == Action.Restart) {
+                    // reset player scores
+                    board.resetGrid();
+                }
             }
         }
     };

@@ -24,6 +24,15 @@ public class Grid extends JPanel {
         fillGrid();
     }
 
+    public void resetGrid() {
+        this.removeAll();
+        grid = new ArrayList<GridSpace>();
+        for (int i = 0; i < 9; i++) {
+            grid.add(new GridSpace(" ", i));
+        }
+        fillGrid();
+    }
+
     private void fillGrid() {
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setLayout(new GridLayout(3, 3));
