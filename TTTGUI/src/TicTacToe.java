@@ -3,8 +3,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 
 
 public class TicTacToe {
@@ -31,7 +29,7 @@ public class TicTacToe {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() instanceof JAButton) {
                 GridSpace gridButton = (GridSpace) e.getSource();
-                int gridIdentifier = gridButton.getIndentifer();
+                int gridIdentifier = gridButton.getIdentifier();
                 Action gridButtonAction = gridButton.getActionType();
                 if (gridButtonAction == Action.ChangeGridSpace) {
                     String currMark = "";

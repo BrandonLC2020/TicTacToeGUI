@@ -1,23 +1,22 @@
-import javax.swing.*;
 enum State {X, O, EMPTY};
 
 public class GridSpace extends JAButton {
-    private int indentifer;
+    private final int identifier;
     private State currentState;
-    public GridSpace(String text, int indentifer) {
+    public GridSpace(String text, int identifier) {
         super(text, TicTacToe.Action.ChangeGridSpace);
-        this.indentifer = indentifer;
+        this.identifier = identifier;
         this.currentState = State.EMPTY;
     }
 
-    public GridSpace(String text, int indentifer, State state) {
+    public GridSpace(String text, int identifier, State state) {
         super(text, TicTacToe.Action.ChangeGridSpace);
-        this.indentifer = indentifer;
+        this.identifier = identifier;
         this.currentState = state;
     }
 
-    public int getIndentifer() {
-        return this.indentifer;
+    public int getIdentifier() {
+        return this.identifier;
     }
 
     public State getCurrentState() {
@@ -39,6 +38,6 @@ public class GridSpace extends JAButton {
     }
 
     public TicTacToe.Action getActionType() {
-        return this.action;
+        return super.getActionType();
     }
 }
