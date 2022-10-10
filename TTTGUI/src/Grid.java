@@ -13,7 +13,7 @@ public class Grid extends JPanel {
         super();
         grid = new ArrayList<GridSpace>();
         for (int i = 0; i < 9; i++) {
-            grid.add(new GridSpace("", i));
+            grid.add(new GridSpace(" ", i));
         }
         fillGrid();
     }

@@ -1,8 +1,10 @@
-enum State {X, O, EMPTY};
+
 
 public class GridSpace extends JAButton {
     private final int identifier;
     private State currentState;
+    public enum State {X, O, EMPTY};
+
     public GridSpace(String text, int identifier) {
         super(text, TicTacToe.Action.ChangeGridSpace);
         this.identifier = identifier;
@@ -25,16 +27,16 @@ public class GridSpace extends JAButton {
 
     public void setCurrentState(State state) {
         this.currentState = state;
-        switch (state) {
-            case O:
-                this.setText("O");
-            case X:
-                this.setText("X");
-            case EMPTY:
-                this.setText("");
-            default:
-                this.setText("");
-        }
+//        switch (state) {
+//            case O:
+//                this.setText("O");
+//            case X:
+//                this.setText("X");
+//            case EMPTY:
+//                this.setText(" ");
+//            default:
+//                this.setText(" ");
+//        }
     }
 
     public TicTacToe.Action getActionType() {

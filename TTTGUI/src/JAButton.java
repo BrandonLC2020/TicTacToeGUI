@@ -6,7 +6,7 @@ public class JAButton extends JButton {
     public JAButton(String text, TicTacToe.Action action) {
         super(text);
         this.actionType = action;
-        this.addActionListener(actionListener);
+        this.addActionListener(TicTacToe.actionListener);
     }
 
     public TicTacToe.Action getActionType() {

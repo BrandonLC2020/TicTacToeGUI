@@ -27,7 +27,7 @@ public class TicTacToe {
     public static ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() instanceof JAButton) {
+            if (e.getSource() instanceof GridSpace) {
                 GridSpace gridButton = (GridSpace) e.getSource();
                 int gridIdentifier = gridButton.getIdentifier();
                 Action gridButtonAction = gridButton.getActionType();
@@ -40,15 +40,16 @@ public class TicTacToe {
                         if (player2.isX()) currMark = "X";
                         else currMark = "O";
                     }
-                    State newState = State.EMPTY;
+                    GridSpace.State newState = GridSpace.State.EMPTY;
                     if (currMark.equals("X")) {
-                        newState = State.X;
+                        newState = GridSpace.State.X;
                     } else {
-                        newState = State.O;
+                        newState = GridSpace.State.O;
                     }
 
-                    if (gridButton.getCurrentState() == State.EMPTY) {
+                    if (gridButton.getCurrentState() == GridSpace.State.EMPTY) {
                         gridButton.setCurrentState(newState);
+                        gridButton.setText(currMark);
                         board.updateGrid(gridIdentifier, gridButton);
                     }
 
