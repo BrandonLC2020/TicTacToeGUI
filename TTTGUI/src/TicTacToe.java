@@ -11,15 +11,26 @@ public class TicTacToe {
     public static JFrame game;
     public static JPanel header;
     public static JLabel message;
+
+    public static JPanel player1Stats;
+    public static JLabel player1Name;
+    public static JLabel player1Wins;
+    public static JLabel player1Losses;
+    public static JLabel player1Draws;
+
+    public static JPanel player2Stats;
+    public static JLabel player2Name;
+    public static JLabel player2Wins;
+    public static JLabel player2Losses;
+    public static JLabel player2Draws;
+
     public static Grid board;
     public static Player player1;
     public static Player player2;
 
     public static boolean isPlayer1Turn;
 
-    private static final Font titleFont = new Font("Arial", 1, 20);
-    private static final Font subTitleFont = new Font("Arial", 1, 15);
-    private static final Font bodyFont = new Font("Arial", 1, 11);
+    private static final Font typicalFont = new Font("Arial", Font.PLAIN, 20);
     private static final EmptyBorder padding = new EmptyBorder(10, 10, 10, 10);
 
     public enum Action {
@@ -59,19 +70,46 @@ public class TicTacToe {
                     } else {
                         tryAgain = true;
                     }
+
                     if (gameOver) {
                         if (GameAnalyzer.isWinX(board)) {
                             String playerName = "";
-                            if (player1.isX()) playerName = "" + player1.getName();
-                            else playerName = player2.getName();
+                            if (player1.isX()) {
+                                playerName = "" + player1.getName();
+                                player1.setNumWins(player1.getNumWins() + 1);
+                                player2.setNumLosses(player2.getNumLosses() + 1);
+                                player1Wins.setText(player1.getNumWins() + " Wins");
+                                player2Losses.setText(player2.getNumLosses() + " Losses");
+                            } else {
+                                playerName = player2.getName();
+                                player2.setNumWins(player2.getNumWins() + 1);
+                                player1.setNumLosses(player1.getNumLosses() + 1);
+                                player2Wins.setText(player2.getNumWins() + " Wins");
+                                player1Losses.setText(player1.getNumLosses() + " Losses");
+                            }
                             message.setText("Game over. " + playerName + " won the game!");
                         } else if (GameAnalyzer.isWinO(board)) {
                             String playerName = "";
-                            if (!player1.isX()) playerName = "" + player1.getName();
-                            else playerName = player2.getName();
+                            if (!player1.isX()) {
+                                playerName = "" + player1.getName();
+                                player1.setNumWins(player1.getNumWins() + 1);
+                                player2.setNumLosses(player2.getNumLosses() + 1);
+                                player1Wins.setText(player1.getNumWins() + " Wins");
+                                player2Losses.setText(player2.getNumLosses() + " Losses");
+                            } else {
+                                playerName = player2.getName();
+                                player2.setNumWins(player2.getNumWins() + 1);
+                                player1.setNumLosses(player1.getNumLosses() + 1);
+                                player2Wins.setText(player2.getNumWins() + " Wins");
+                                player1Losses.setText(player1.getNumLosses() + " Losses");
+                            }
                             message.setText("Game over. " + playerName + " won the game!");
-                        } else { //must be draw
+                        } else { //must be a draw
                             message.setText("Game over. It's a draw!");
+                            player1.setNumDraws(player1.getNumDraws() + 1);
+                            player2.setNumDraws(player2.getNumDraws() + 1);
+                            player1Draws.setText(player1.getNumDraws() + " Draws");
+                            player2Draws.setText(player2.getNumDraws() + " Draws");
                         }
                     } else if (!tryAgain) {
                         if (isPlayer1Turn) {
@@ -82,11 +120,9 @@ public class TicTacToe {
                     } else {
                         message.setText("That space is already taken! Try again.");
                     }
-
-                    header.removeAll();
-                    header.add(message);
-                    game.add(header, BorderLayout.NORTH);
+                    game.update(game.getGraphics());
                 }
+                game.update(game.getGraphics());
             } else if (e.getSource() instanceof JAButton) {
                 JAButton button = (JAButton) e.getSource();
                 Action buttonAction = button.getActionType();
@@ -105,8 +141,17 @@ public class TicTacToe {
                 } else if (buttonAction == Action.ResetPlayerStats) {
                     player1.resetStats();
                     player2.resetStats();
+                    player1Wins.setText(player1.getNumWins() + " Wins");
+                    player1Losses.setText(player1.getNumLosses() + " Losses");
+                    player1Draws.setText(player1.getNumDraws() + " Draws");
+                    player2Wins.setText(player2.getNumWins() + " Wins");
+                    player2Losses.setText(player2.getNumLosses() + " Losses");
+                    player2Draws.setText(player2.getNumDraws() + " Draws");
+
                 }
+                game.update(game.getGraphics());
             }
+            game.update(game.getGraphics());
         }
     };
 
@@ -245,7 +290,7 @@ public class TicTacToe {
         } else {
             message = new JLabel("It's " + player2.getName() + "'s turn.");
         }
-        message.setFont(titleFont);
+        message.setFont(typicalFont);
         header.add(message);
         content.add(header, BorderLayout.NORTH);
 
@@ -273,15 +318,15 @@ public class TicTacToe {
         board.setMaximumSize(new Dimension(300,300));
         content.add(board, BorderLayout.CENTER);
 
-        JPanel player1Stats = new JPanel(new GridLayout(0,1));
-        JLabel player1Name = new JLabel(player1.getName());
-        JLabel player1Wins = new JLabel(player1.getNumWins() + " Wins");
-        JLabel player1Losses = new JLabel(player1.getNumLosses() + " Losses");
-        JLabel player1Draws = new JLabel(player1.getNumDraws() + " Draws");
-        player1Name.setFont(titleFont);
-        player1Wins.setFont(titleFont);
-        player1Losses.setFont(titleFont);
-        player1Draws.setFont(titleFont);
+        player1Stats = new JPanel(new GridLayout(0,1));
+        player1Name = new JLabel(player1.getName());
+        player1Wins = new JLabel(player1.getNumWins() + " Wins");
+        player1Losses = new JLabel(player1.getNumLosses() + " Losses");
+        player1Draws = new JLabel(player1.getNumDraws() + " Draws");
+        player1Name.setFont(typicalFont);
+        player1Wins.setFont(typicalFont);
+        player1Losses.setFont(typicalFont);
+        player1Draws.setFont(typicalFont);
         player1Stats.add(player1Name);
         player1Stats.add(player1Wins);
         player1Stats.add(player1Losses);
@@ -291,15 +336,15 @@ public class TicTacToe {
         player1Stats.setPreferredSize(new Dimension(150, 300));
         player1Stats.setMaximumSize(new Dimension(150, 300));
 
-        JPanel player2Stats = new JPanel(new GridLayout(0,1));
-        JLabel player2Name = new JLabel(player2.getName());
-        JLabel player2Wins = new JLabel(player2.getNumWins() + " Wins");
-        JLabel player2Losses = new JLabel(player2.getNumLosses() + " Losses");
-        JLabel player2Draws = new JLabel(player2.getNumDraws() + " Draws");
-        player2Name.setFont(titleFont);
-        player2Wins.setFont(titleFont);
-        player2Losses.setFont(titleFont);
-        player2Draws.setFont(titleFont);
+        player2Stats = new JPanel(new GridLayout(0,1));
+        player2Name = new JLabel(player2.getName());
+        player2Wins = new JLabel(player2.getNumWins() + " Wins");
+        player2Losses = new JLabel(player2.getNumLosses() + " Losses");
+        player2Draws = new JLabel(player2.getNumDraws() + " Draws");
+        player2Name.setFont(typicalFont);
+        player2Wins.setFont(typicalFont);
+        player2Losses.setFont(typicalFont);
+        player2Draws.setFont(typicalFont);
         player2Stats.add(player2Name);
         player2Stats.add(player2Wins);
         player2Stats.add(player2Losses);
@@ -333,7 +378,7 @@ public class TicTacToe {
         } else {
             message = new JLabel("It's " + player2.getName() + "'s turn.");
         }
-        message.setFont(titleFont);
+        message.setFont(typicalFont);
         header.add(message);
         content.add(header, BorderLayout.NORTH);
 
@@ -363,10 +408,10 @@ public class TicTacToe {
         JLabel player1Wins = new JLabel(player1.getNumWins() + " Wins");
         JLabel player1Losses = new JLabel(player1.getNumLosses() + " Losses");
         JLabel player1Draws = new JLabel(player1.getNumDraws() + " Draws");
-        player1Name.setFont(titleFont);
-        player1Wins.setFont(titleFont);
-        player1Losses.setFont(titleFont);
-        player1Draws.setFont(titleFont);
+        player1Name.setFont(typicalFont);
+        player1Wins.setFont(typicalFont);
+        player1Losses.setFont(typicalFont);
+        player1Draws.setFont(typicalFont);
         player1Stats.add(player1Name);
         player1Stats.add(player1Wins);
         player1Stats.add(player1Losses);
@@ -381,10 +426,10 @@ public class TicTacToe {
         JLabel player2Wins = new JLabel(player2.getNumWins() + " Wins");
         JLabel player2Losses = new JLabel(player2.getNumLosses() + " Losses");
         JLabel player2Draws = new JLabel(player2.getNumDraws() + " Draws");
-        player2Name.setFont(titleFont);
-        player2Wins.setFont(titleFont);
-        player2Losses.setFont(titleFont);
-        player2Draws.setFont(titleFont);
+        player2Name.setFont(typicalFont);
+        player2Wins.setFont(typicalFont);
+        player2Losses.setFont(typicalFont);
+        player2Draws.setFont(typicalFont);
         player2Stats.add(player2Name);
         player2Stats.add(player2Wins);
         player2Stats.add(player2Losses);
