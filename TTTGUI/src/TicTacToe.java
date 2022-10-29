@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 
 public class TicTacToe {
@@ -48,26 +49,29 @@ public class TicTacToe {
                     } else {
                         newState = GridSpace.State.O;
                     }
-
+                    boolean tryAgain = false;
                     if (gridButton.getCurrentState() == GridSpace.State.EMPTY) {
                         gridButton.setCurrentState(newState);
                         gridButton.setText(currMark);
                         board.updateGrid(gridIdentifier, gridButton);
-                    }
-                    isPlayer1Turn = !isPlayer1Turn;
-
-                    if (isPlayer1Turn) {
-                        message.setText("It's " + player1.getName() + "'s turn.");
+                        isPlayer1Turn = !isPlayer1Turn;
                     } else {
-                        message.setText("It's " + player2.getName() + "'s turn.");
+                        tryAgain = true;
+                    }
+
+                    if (!tryAgain) {
+                        if (isPlayer1Turn) {
+                            message.setText("It's " + player1.getName() + "'s turn.");
+                        } else {
+                            message.setText("It's " + player2.getName() + "'s turn.");
+                        }
+                    } else {
+                        message.setText("That space is already taken! Try again.");
                     }
 
                     header.removeAll();
                     header.add(message);
                     game.add(header, BorderLayout.NORTH);
-
-
-
                 }
             } else if (e.getSource() instanceof JAButton) {
                 JAButton button = (JAButton) e.getSource();
