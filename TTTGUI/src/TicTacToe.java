@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.util.Date;
 
 
 public class TicTacToe {
@@ -24,7 +23,7 @@ public class TicTacToe {
     private static final EmptyBorder padding = new EmptyBorder(10, 10, 10, 10);
 
     public enum Action {
-        ChangeGridSpace, Restart, ChangeGameConfig, ChangeGameMode, Quit
+        ChangeGridSpace, Restart, ChangeGameConfig, ChangeGameMode, Quit, ResetPlayerStats
     }
 
     public static ActionListener actionListener = new ActionListener() {
@@ -34,7 +33,7 @@ public class TicTacToe {
                 GridSpace gridButton = (GridSpace) e.getSource();
                 int gridIdentifier = gridButton.getIdentifier();
                 Action gridButtonAction = gridButton.getActionType();
-                if (gridButtonAction == Action.ChangeGridSpace) {
+                if (!GameAnalyzer.gameOver(board) && gridButtonAction == Action.ChangeGridSpace) {
                     String currMark = "";
                     if (isPlayer1Turn) {
                         if (player1.isX()) currMark = "X";
@@ -50,16 +49,31 @@ public class TicTacToe {
                         newState = GridSpace.State.O;
                     }
                     boolean tryAgain = false;
+                    boolean gameOver = false;
                     if (gridButton.getCurrentState() == GridSpace.State.EMPTY) {
                         gridButton.setCurrentState(newState);
                         gridButton.setText(currMark);
                         board.updateGrid(gridIdentifier, gridButton);
+                        gameOver = GameAnalyzer.gameOver(board);
                         isPlayer1Turn = !isPlayer1Turn;
                     } else {
                         tryAgain = true;
                     }
-
-                    if (!tryAgain) {
+                    if (gameOver) {
+                        if (GameAnalyzer.isWinX(board)) {
+                            String playerName = "";
+                            if (player1.isX()) playerName = "" + player1.getName();
+                            else playerName = player2.getName();
+                            message.setText("Game over. " + playerName + " won the game!");
+                        } else if (GameAnalyzer.isWinO(board)) {
+                            String playerName = "";
+                            if (!player1.isX()) playerName = "" + player1.getName();
+                            else playerName = player2.getName();
+                            message.setText("Game over. " + playerName + " won the game!");
+                        } else { //must be draw
+                            message.setText("Game over. It's a draw!");
+                        }
+                    } else if (!tryAgain) {
                         if (isPlayer1Turn) {
                             message.setText("It's " + player1.getName() + "'s turn.");
                         } else {
@@ -77,8 +91,15 @@ public class TicTacToe {
                 JAButton button = (JAButton) e.getSource();
                 Action buttonAction = button.getActionType();
                 if (buttonAction == Action.Restart) {
-                    // reset player scores
                     board.resetGrid();
+                    if (isPlayer1Turn) {
+                        message.setText("NEW GAME! It's " + player1.getName() + "'s turn.");
+                    } else {
+                        message.setText("NEW GAME! It's " + player2.getName() + "'s turn.");
+                    }
+                    header.removeAll();
+                    header.add(message);
+                    game.add(header, BorderLayout.NORTH);
                 } else if (buttonAction == Action.Quit) {
                     game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
                 }
@@ -229,15 +250,18 @@ public class TicTacToe {
         JAButton gameConfigChange = new JAButton("Change Game Configuration", Action.ChangeGameConfig);
         JAButton gameModeChange = new JAButton("Change Game Mode", Action.ChangeGameMode);
         JAButton quitGame = new JAButton("Quit", Action.Quit);
+        JAButton resetPlayerStats = new JAButton("Reset Player Stats", Action.ResetPlayerStats);
         restart.addActionListener(actionListener);
         gameConfigChange.addActionListener(actionListener);
         gameModeChange.addActionListener(actionListener);
         quitGame.addActionListener(actionListener);
+        resetPlayerStats.addActionListener(actionListener);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(restart);
         buttonPanel.add(gameConfigChange);
         buttonPanel.add(gameModeChange);
+        buttonPanel.add(resetPlayerStats);
         buttonPanel.add(quitGame);
         content.add(buttonPanel, BorderLayout.SOUTH);
 

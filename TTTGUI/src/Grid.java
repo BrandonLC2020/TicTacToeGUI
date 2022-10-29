@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Grid extends JPanel {
 
-    private ArrayList<GridSpace> grid;
+    public ArrayList<GridSpace> grid;
 
 
     public Grid() {

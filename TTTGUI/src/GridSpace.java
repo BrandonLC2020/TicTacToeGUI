@@ -27,16 +27,6 @@ public class GridSpace extends JAButton {
 
     public void setCurrentState(State state) {
         this.currentState = state;
-//        switch (state) {
-//            case O:
-//                this.setText("O");
-//            case X:
-//                this.setText("X");
-//            case EMPTY:
-//                this.setText(" ");
-//            default:
-//                this.setText(" ");
-//        }
     }
 
     public TicTacToe.Action getActionType() {
