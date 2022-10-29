@@ -128,14 +128,14 @@ public class TicTacToe {
                 Action buttonAction = button.getActionType();
                 if (buttonAction == Action.Restart) {
                     board.resetGrid();
+
                     if (isPlayer1Turn) {
                         message.setText("NEW GAME! It's " + player1.getName() + "'s turn.");
                     } else {
                         message.setText("NEW GAME! It's " + player2.getName() + "'s turn.");
                     }
-                    header.removeAll();
-                    header.add(message);
-                    game.add(header, BorderLayout.NORTH);
+                    board.update(board.getGraphics());
+                    game.update(game.getGraphics());
                 } else if (buttonAction == Action.Quit) {
                     game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
                 } else if (buttonAction == Action.ResetPlayerStats) {
@@ -147,7 +147,6 @@ public class TicTacToe {
                     player2Wins.setText(player2.getNumWins() + " Wins");
                     player2Losses.setText(player2.getNumLosses() + " Losses");
                     player2Draws.setText(player2.getNumDraws() + " Draws");
-
                 }
                 game.update(game.getGraphics());
             }
@@ -178,7 +177,8 @@ public class TicTacToe {
     }
 
     public static boolean configPVP() {
-        String player1Name = JOptionPane.showInputDialog(null, "Enter Player 1's Name.", JOptionPane.QUESTION_MESSAGE);
+        String player1Name = JOptionPane.showInputDialog(null, "Enter Player 1's Name.", "",
+                JOptionPane.QUESTION_MESSAGE, null,null,"Player 1").toString();
         if (player1Name == null) return false;
 
         String[] markOptions = { "O", "X" };
@@ -193,7 +193,8 @@ public class TicTacToe {
             return false;
         }
 
-        String player2Name = JOptionPane.showInputDialog(null, "Enter Player 2's Name.", JOptionPane.QUESTION_MESSAGE);
+        String player2Name = JOptionPane.showInputDialog(null, "Enter Player 2's Name.", "",
+                JOptionPane.QUESTION_MESSAGE,null,null,"Player 2").toString();
         if (player1Name == null) return false;
 
         String[] startOptions = { "Player 2", "Player 1" };
@@ -363,6 +364,7 @@ public class TicTacToe {
         game.setLocationRelativeTo(null);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setVisible(true);
+        game.update(game.getGraphics());
     }
 
     public static void gamePVComp() {

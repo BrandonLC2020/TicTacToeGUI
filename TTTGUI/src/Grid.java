@@ -20,8 +20,6 @@ public class Grid extends JPanel {
 
     public void updateGrid(int i, GridSpace newGridSpace) {
         grid.set(i, newGridSpace);
-//        this.removeAll();
-//        fillGrid();
     }
 
     public void resetGrid() {
