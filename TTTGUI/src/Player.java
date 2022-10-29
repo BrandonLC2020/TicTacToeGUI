@@ -57,4 +57,10 @@ public class Player {
     public boolean isX() {
         return isX;
     }
+
+    public void resetStats() {
+        this.numWins = 0;
+        this.numDraws = 0;
+        this.numLosses = 0;
+    }
 }

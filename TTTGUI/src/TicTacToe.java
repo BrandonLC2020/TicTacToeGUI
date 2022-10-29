@@ -102,6 +102,9 @@ public class TicTacToe {
                     game.add(header, BorderLayout.NORTH);
                 } else if (buttonAction == Action.Quit) {
                     game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
+                } else if (buttonAction == Action.ResetPlayerStats) {
+                    player1.resetStats();
+                    player2.resetStats();
                 }
             }
         }
