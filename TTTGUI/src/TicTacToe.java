@@ -169,10 +169,13 @@ public class TicTacToe {
         switch (gameMode) {
             case 2:
                 gamePVP();
+                break;
             case 1:
                 gamePVComp();
+                break;
             case 0:
                 gameCompVComp();
+                break;
         }
     }
 
@@ -372,9 +375,7 @@ public class TicTacToe {
         Container content = game.getContentPane();
         content.setLayout(new BorderLayout());
 
-        JPanel header = new JPanel();
-        JLabel message;
-
+        header = new JPanel();
         if (player1.starts()) {
             message = new JLabel("It's " + player1.getName() + "'s turn.");
         } else {
@@ -388,15 +389,18 @@ public class TicTacToe {
         JAButton gameConfigChange = new JAButton("Change Game Configuration", Action.ChangeGameConfig);
         JAButton gameModeChange = new JAButton("Change Game Mode", Action.ChangeGameMode);
         JAButton quitGame = new JAButton("Quit", Action.Quit);
+        JAButton resetPlayerStats = new JAButton("Reset Player Stats", Action.ResetPlayerStats);
         restart.addActionListener(actionListener);
         gameConfigChange.addActionListener(actionListener);
         gameModeChange.addActionListener(actionListener);
         quitGame.addActionListener(actionListener);
+        resetPlayerStats.addActionListener(actionListener);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(restart);
         buttonPanel.add(gameConfigChange);
         buttonPanel.add(gameModeChange);
+        buttonPanel.add(resetPlayerStats);
         buttonPanel.add(quitGame);
         content.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -405,11 +409,11 @@ public class TicTacToe {
         board.setMaximumSize(new Dimension(300,300));
         content.add(board, BorderLayout.CENTER);
 
-        JPanel player1Stats = new JPanel(new GridLayout(0,1));
-        JLabel player1Name = new JLabel(player1.getName());
-        JLabel player1Wins = new JLabel(player1.getNumWins() + " Wins");
-        JLabel player1Losses = new JLabel(player1.getNumLosses() + " Losses");
-        JLabel player1Draws = new JLabel(player1.getNumDraws() + " Draws");
+        player1Stats = new JPanel(new GridLayout(0,1));
+        player1Name = new JLabel(player1.getName());
+        player1Wins = new JLabel(player1.getNumWins() + " Wins");
+        player1Losses = new JLabel(player1.getNumLosses() + " Losses");
+        player1Draws = new JLabel(player1.getNumDraws() + " Draws");
         player1Name.setFont(typicalFont);
         player1Wins.setFont(typicalFont);
         player1Losses.setFont(typicalFont);
@@ -423,11 +427,11 @@ public class TicTacToe {
         player1Stats.setPreferredSize(new Dimension(150, 300));
         player1Stats.setMaximumSize(new Dimension(150, 300));
 
-        JPanel player2Stats = new JPanel(new GridLayout(0,1));
-        JLabel player2Name = new JLabel(player2.getName());
-        JLabel player2Wins = new JLabel(player2.getNumWins() + " Wins");
-        JLabel player2Losses = new JLabel(player2.getNumLosses() + " Losses");
-        JLabel player2Draws = new JLabel(player2.getNumDraws() + " Draws");
+        player2Stats = new JPanel(new GridLayout(0,1));
+        player2Name = new JLabel(player2.getName());
+        player2Wins = new JLabel(player2.getNumWins() + " Wins");
+        player2Losses = new JLabel(player2.getNumLosses() + " Losses");
+        player2Draws = new JLabel(player2.getNumDraws() + " Draws");
         player2Name.setFont(typicalFont);
         player2Wins.setFont(typicalFont);
         player2Losses.setFont(typicalFont);
@@ -450,6 +454,7 @@ public class TicTacToe {
         game.setLocationRelativeTo(null);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setVisible(true);
+        game.update(game.getGraphics());
     }
 
     public static void gameCompVComp() {
