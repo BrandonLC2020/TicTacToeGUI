@@ -1,13 +1,14 @@
 public class Player {
     private String name;
     private boolean isComputer;
+    private boolean isSmartComputer;
     private boolean isX;
     private boolean starts;
     private int numWins;
     private int numDraws;
     private int numLosses;
 
-    public Player(String name, boolean isComputer, boolean isX, boolean starts) {
+    public Player(String name, boolean isComputer, boolean isSmartComputer, boolean isX, boolean starts) {
         this.name = name;
         this.isComputer = isComputer;
         this.isX = isX;

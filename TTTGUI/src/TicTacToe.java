@@ -221,8 +221,8 @@ public class TicTacToe {
             return false;
         }
         isPlayer1Turn = player1Starts;
-        player1 = new Player(player1Name, false, player1IsX, player1Starts);
-        player2 = new Player(player2Name, false, !player1IsX, !player1Starts);
+        player1 = new Player(player1Name, false, false, player1IsX, player1Starts);
+        player2 = new Player(player2Name, false, false, !player1IsX, !player1Starts);
 
         return true;
     }
@@ -231,32 +231,45 @@ public class TicTacToe {
         String player1Name = JOptionPane.showInputDialog(null, "Enter Player's Name.", JOptionPane.QUESTION_MESSAGE);
         if (player1Name == null) return false;
 
-        String[] markOptions = { "X", "O" };
+        String[] markOptions = { "O", "X" };
         boolean player1IsX;
         int player1Mark = JOptionPane.showOptionDialog(null, "Choose Player's Mark.", "",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, markOptions, markOptions[0]);
         if (player1Mark == 0) {
-            player1IsX = true;
-        } else if (player1Mark == 1) {
             player1IsX = false;
+        } else if (player1Mark == 1) {
+            player1IsX = true;
         } else {
             return false;
         }
 
-        String[] startOptions = { "Player", "Computer" };
-        boolean player1Starts;
+        String[] compOptions = {"Smart", "Normal"};
+        boolean isSmartComputer;
+        int compLevel = JOptionPane.showOptionDialog(null, "Choose Computer's Level.", "",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, compOptions, compOptions[0]);
+        if (compLevel == 0) {
+            isSmartComputer = true;
+        } else if (compLevel == 1) {
+            isSmartComputer = false;
+        } else  {
+            return false;
+        }
+
+        String[] startOptions = { "Computer", "Player" };
+        boolean playerStarts;
         int startingPlayer = JOptionPane.showOptionDialog(null, "Which Player Goes First?", "",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, startOptions, startOptions[0]);
         if (startingPlayer == 0) {
-            player1Starts = true;
+            playerStarts = false;
         } else if (startingPlayer == 1) {
-            player1Starts = false;
+            playerStarts = true;
         } else {
             return false;
         }
-        isPlayer1Turn = player1Starts;
-        player1 = new Player(player1Name, false, player1IsX, player1Starts);
-        player2 = new Player("Computer", true, !player1IsX, !player1Starts);
+
+        isPlayer1Turn = playerStarts;
+        player1 = new Player(player1Name, false, false, player1IsX, playerStarts);
+        player2 = new Player("Computer", true, isSmartComputer, !player1IsX, !playerStarts);
 
         return true;
     }
@@ -280,14 +293,12 @@ public class TicTacToe {
             computer1Starts = false;
         }
 
-
         if (coinFlip1 == 0) {
 
         }
 
-
-        player1 = new Player("Computer 1", true, computer1IsX, computer1Starts);
-        player2 = new Player("Computer 2", true, !computer1IsX, !computer1Starts);
+        player1 = new Player("Computer 1", true, false, computer1IsX, computer1Starts);
+        player2 = new Player("Computer 2", true, false, !computer1IsX, !computer1Starts);
 
         return true;
     }
