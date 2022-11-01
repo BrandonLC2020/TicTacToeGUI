@@ -147,6 +147,11 @@ public class TicTacToe {
                     player2Wins.setText(player2.getNumWins() + " Wins");
                     player2Losses.setText(player2.getNumLosses() + " Losses");
                     player2Draws.setText(player2.getNumDraws() + " Draws");
+                } else if (buttonAction == Action.ChangeGameConfig) {
+                    game.dispose();
+                } else if (buttonAction == Action.ChangeGameMode) {
+                    game.dispose();
+                    startGame();
                 }
                 game.update(game.getGraphics());
             }
@@ -154,7 +159,7 @@ public class TicTacToe {
         }
     };
 
-    public static void main(String[] args) {
+    public static void startGame() {
         int gameMode = -1;
         while (true) {
             int chooseGameMode = showStartMenu();
@@ -177,6 +182,10 @@ public class TicTacToe {
                 gameCompVComp();
                 break;
         }
+    }
+
+    public static void main(String[] args) {
+        startGame();
     }
 
     public static boolean configPVP() {
