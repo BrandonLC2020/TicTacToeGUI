@@ -62,6 +62,24 @@ public class GameAnalyzer {
         return colStr.toString();
     }
 
+    private static String getDiagonal1(Grid board) {
+        char[][] currCharGrid = getCharGrid(board);
+        StringBuilder diaStr = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            diaStr.append(currCharGrid[i][i]);
+        }
+        return diaStr.toString();
+    }
+
+    private static String getDiagonal2(Grid board) {
+        char[][] currCharGrid = getCharGrid(board);
+        StringBuilder diaStr = new StringBuilder();
+        for (int i = 0; i < 2; i++) {
+            diaStr.append(currCharGrid[i][2 - i]);
+        }
+        return diaStr.toString();
+    }
+
     private static String getRow(char[][] currCharGrid, int row) {
         StringBuilder rowStr = new StringBuilder();
         for (int i = 0; i < 3; i++) {
@@ -77,6 +95,23 @@ public class GameAnalyzer {
         }
         return colStr.toString();
     }
+
+    private static String getDiagonal1(char[][] currCharGrid) {
+        StringBuilder diaStr = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            diaStr.append(currCharGrid[i][i]);
+        }
+        return diaStr.toString();
+    }
+
+    private static String getDiagonal2(char[][] currCharGrid) {
+        StringBuilder diaStr = new StringBuilder();
+        for (int i = 0; i < 2; i++) {
+            diaStr.append(currCharGrid[i][2 - i]);
+        }
+        return diaStr.toString();
+    }
+
 
     public static boolean gameOver(Grid board) {
         return isWinO(board) || isWinX(board) || isDraw(board);
@@ -160,70 +195,52 @@ public class GameAnalyzer {
         char[][] currCharGrid = getCharGrid(board);
         String[] allSpaces = new String[] {getRow(currCharGrid, 0), getRow(currCharGrid, 1),
                 getRow(currCharGrid, 2), getColumn(currCharGrid, 0), getColumn(currCharGrid, 1),
-                getColumn(currCharGrid2), getDiagonal1(), getDiagonal2()};
+                getColumn(currCharGrid, 2), getDiagonal1(currCharGrid), getDiagonal2(currCharGrid)};
         int[] movesAway = new int[8];
         int[] numEmpty = new int[8];
         int[] trueMovesAway = new int[8];
         int[] wiseMove = new int[2];
-        if(player1IsX == true)
-        {
+        if(TicTacToe.player1.isX()) {
             //checks to see how many O's are in each row, column, and diagonal and takes 3 minus that number
-            for(int i = 0; i < 8; i++)
-            {
+            for(int i = 0; i < 8; i++) {
                 int moves = 3;
-                for(int j = 0; j < 3; j++)
-                {
-                    if(allSpaces[i].charAt(j) == 'O')
-                    {
+                for(int j = 0; j < 3; j++) {
+                    if(allSpaces[i].charAt(j) == 'O') {
                         moves--;
                     }
                 }
                 movesAway[i] = moves;
             }
             //checks to see if there is an empty space in each row, column, and diagonal
-            for(int i = 0; i < 8; i++)
-            {
-                if(movesAway[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(movesAway[i] > 0) {
                     boolean hasEmpty = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O'))
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O')) {
                             hasEmpty = true;
                             break;
                         }
                     }
-                    if(hasEmpty == false)
-                    {
+                    if(!hasEmpty) {
                         numEmpty[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         numEmpty[i] = movesAway[i];
                     }
                 }
             }
             //checks to see if an X is already placed in each row, column, and diagonal
-            for(int i = 0; i < 8; i++)
-            {
-                if(numEmpty[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(numEmpty[i] > 0) {
                     boolean blockMade = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if(allSpaces[i].charAt(j) == 'X')
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if(allSpaces[i].charAt(j) == 'X') {
                             blockMade = true;
                             break;
                         }
                     }
-                    if(blockMade == true)
-                    {
+                    if(blockMade) {
                         trueMovesAway[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         trueMovesAway[i] = numEmpty[i];
                     }
                 }
@@ -232,99 +249,71 @@ public class GameAnalyzer {
             int min = 3;
             int minIndex = 0;
             boolean allZero = true;
-            for(int i = 0; i < 8; i++)
-            {
-                if(trueMovesAway[i] != 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(trueMovesAway[i] != 0) {
                     allZero = false;
                     break;
                 }
             }
-            if(allZero == false)
-            {
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3))
-                    {
+            if(!allZero) {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3)) {
                         minIndex = i;
                         break;
                     }
                 }
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min))
-                    {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min)) {
                         min = trueMovesAway[i];
                         minIndex = i;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 min = 0;
                 minIndex = 0;
             }
             wiseMove[1] = min;
             wiseMove[0] = minIndex;
-        }
-        else //same things but for opposite marks
-        {
-            for(int i = 0; i < 8; i++)
-            {
+        } else { //same things but for opposite marks
+            for(int i = 0; i < 8; i++) {
                 int moves = 3;
-                for(int j = 0; j < 3; j++)
-                {
-                    if(allSpaces[i].charAt(j) == 'X')
-                    {
+                for(int j = 0; j < 3; j++) {
+                    if(allSpaces[i].charAt(j) == 'X') {
                         moves--;
                     }
                 }
                 movesAway[i] = moves;
             }
 
-            for(int i = 0; i < 8; i++)
-            {
-                if(movesAway[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(movesAway[i] > 0) {
                     boolean hasEmpty = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O'))
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O')) {
                             hasEmpty = true;
                             break;
                         }
                     }
-                    if(hasEmpty == false)
-                    {
+                    if (!hasEmpty) {
                         numEmpty[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         numEmpty[i] = movesAway[i];
                     }
                 }
             }
 
-            for(int i = 0; i < 8; i++)
-            {
-                if(numEmpty[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(numEmpty[i] > 0) {
                     boolean blockMade = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if(allSpaces[i].charAt(j) == 'O')
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if(allSpaces[i].charAt(j) == 'O') {
                             blockMade = true;
                             break;
                         }
                     }
-                    if(blockMade == true)
-                    {
+                    if(blockMade) {
                         trueMovesAway[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         trueMovesAway[i] = numEmpty[i];
                     }
                 }
@@ -333,35 +322,26 @@ public class GameAnalyzer {
             int min = 3;
             int minIndex = 0;
             boolean allZero = true;
-            for(int i = 0; i < 8; i++)
-            {
-                if(trueMovesAway[i] != 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(trueMovesAway[i] != 0) {
                     allZero = false;
                     break;
                 }
             }
-            if(allZero == false)
-            {
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3))
-                    {
+            if(!allZero) {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3)) {
                         minIndex = i;
                         break;
                     }
                 }
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min))
-                    {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min)) {
                         min = trueMovesAway[i];
                         minIndex = i;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 min = 0;
                 minIndex = 0;
             }
@@ -372,177 +352,133 @@ public class GameAnalyzer {
         return wiseMove;
     }
 
-    public int[] computerDefense()
+    public int[] computerDefense(Grid board)
     {
         //returns smart move for defense AND the number of moves until that happens
-        String[] allSpaces = new String[] {getRows(0), getRows(1), getRows(2), getColumns(0), getColumns(1), getColumns(2), getDiagonal1(), getDiagonal2()};
+        char[][] currCharGrid = getCharGrid(board);
+        String[] allSpaces = new String[] {getRow(currCharGrid, 0), getRow(currCharGrid, 1),
+                getRow(currCharGrid, 2), getColumn(currCharGrid, 0), getColumn(currCharGrid, 1),
+                getColumn(currCharGrid, 2), getDiagonal1(currCharGrid), getDiagonal2(currCharGrid)};
         int[] movesAway = new int[8];
         int[] numEmpty = new int[8];
         int[] trueMovesAway = new int[8];
         int[] wiseMove = new int[2];
-        if(player1IsX == true)
-        {
+        if(TicTacToe.player1.isX()) {
             //checks to see how many X's are in each row, column, and diagonal and takes 3 minus that number
-            for(int i = 0; i < 8; i++)
-            {
+            for(int i = 0; i < 8; i++) {
                 int moves = 3;
-                for(int j = 0; j < 3; j++)
-                {
-                    if(allSpaces[i].charAt(j) == 'X')
-                    {
+                for(int j = 0; j < 3; j++) {
+                    if(allSpaces[i].charAt(j) == 'X') {
                         moves--;
                     }
                 }
                 movesAway[i] = moves;
             }
             //checks to see if there is an empty space in each row, column, and diagonal
-            for(int i = 0; i < 8; i++)
-            {
-                if(movesAway[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(movesAway[i] > 0) {
                     boolean hasEmpty = false;
-                    for(int j = 0; j < 3; j++)
-                    {
+                    for(int j = 0; j < 3; j++) {
                         if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O'))
                         {
                             hasEmpty = true;
                             break;
                         }
                     }
-                    if(hasEmpty == false)
-                    {
+                    if(!hasEmpty) {
                         numEmpty[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         numEmpty[i] = movesAway[i];
                     }
                 }
             }
             //checks to see if an O is already placed in each row, column, and diagonal
-            for(int i = 0; i < 8; i++)
-            {
-                if(numEmpty[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(numEmpty[i] > 0) {
                     boolean blockMade = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if(allSpaces[i].charAt(j) == 'O')
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if(allSpaces[i].charAt(j) == 'O') {
                             blockMade = true;
                             break;
                         }
                     }
-                    if(blockMade == true)
-                    {
+                    if(blockMade) {
                         trueMovesAway[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         trueMovesAway[i] = numEmpty[i];
                     }
-
                 }
             }
             //determines the smallest number of moves for the opponent to make to win and where to make they'd make that move (row, col, or diagonal)
             int min = 3;
             int minIndex = 0;
             boolean allZero = true;
-            for(int i = 0; i < 8; i++)
-            {
-                if(trueMovesAway[i] != 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(trueMovesAway[i] != 0) {
                     allZero = false;
                     break;
                 }
             }
-            if(allZero == false)
-            {
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3))
-                    {
+            if(!allZero) {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3)) {
                         minIndex = i;
                         break;
                     }
                 }
 
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min))
-                    {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min)) {
                         min = trueMovesAway[i];
                         minIndex = i;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 min = 0;
                 minIndex = 0;
             }
             wiseMove[1] = min;
             wiseMove[0] = minIndex;
-
-        }
-        else //same thing but checking for opposite marks
-        {
-            for(int i = 0; i < 8; i++)
-            {
+        } else { //same thing but checking for opposite marks
+            for(int i = 0; i < 8; i++) {
                 int moves = 3;
-                for(int j = 0; j < 3; j++)
-                {
-                    if(allSpaces[i].charAt(j) == 'O')
-                    {
+                for(int j = 0; j < 3; j++) {
+                    if(allSpaces[i].charAt(j) == 'O') {
                         moves--;
                     }
                 }
                 movesAway[i] = moves;
             }
 
-            for(int i = 0; i < 8; i++)
-            {
-                if(movesAway[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(movesAway[i] > 0) {
                     boolean hasEmpty = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O'))
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if((allSpaces[i].charAt(j) != 'X') && (allSpaces[i].charAt(j) != 'O')) {
                             hasEmpty = true;
                             break;
                         }
                     }
-                    if(hasEmpty == false)
-                    {
+                    if(!hasEmpty) {
                         numEmpty[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         numEmpty[i] = movesAway[i];
                     }
                 }
             }
 
-            for(int i = 0; i < 8; i++)
-            {
-                if(numEmpty[i] > 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if (numEmpty[i] > 0) {
                     boolean blockMade = false;
-                    for(int j = 0; j < 3; j++)
-                    {
-                        if(allSpaces[i].charAt(j) == 'X')
-                        {
+                    for(int j = 0; j < 3; j++) {
+                        if (allSpaces[i].charAt(j) == 'X') {
                             blockMade = true;
                             break;
                         }
                     }
-                    if(blockMade == true)
-                    {
+                    if (blockMade) {
                         trueMovesAway[i] = 0;
-                    }
-                    else
-                    {
+                    } else {
                         trueMovesAway[i] = numEmpty[i];
                     }
                 }
@@ -550,43 +486,33 @@ public class GameAnalyzer {
             int min = 3;
             int minIndex = 0;
             boolean allZero = true;
-            for(int i = 0; i < 8; i++)
-            {
-                if(trueMovesAway[i] != 0)
-                {
+            for(int i = 0; i < 8; i++) {
+                if(trueMovesAway[i] != 0) {
                     allZero = false;
                     break;
                 }
             }
-            if(allZero == false)
-            {
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3))
-                    {
+            if(!allZero) {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] <= 3)) {
                         minIndex = i;
                         break;
                     }
                 }
 
-                for(int i = 0; i < 8; i++)
-                {
-                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min))
-                    {
+                for(int i = 0; i < 8; i++) {
+                    if((trueMovesAway[i] != 0) && (trueMovesAway[i] < min)) {
                         min = trueMovesAway[i];
                         minIndex = i;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 min = 0;
                 minIndex = 0;
             }
             wiseMove[1] = min;       //how many moves away the opponent is from a win
             wiseMove[0] = minIndex;  //used to determine where to make the move (row, column, diagonal
         }
-
         return wiseMove;
     }
 }
