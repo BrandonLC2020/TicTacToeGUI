@@ -64,4 +64,8 @@ public class Player {
         this.numDraws = 0;
         this.numLosses = 0;
     }
+
+    public boolean isSmartComputer() {
+        return isSmartComputer;
+    }
 }

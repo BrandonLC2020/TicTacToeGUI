@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameAnalyzer {
 
@@ -604,4 +605,44 @@ public class GameAnalyzer {
         }
         return move;
     }
+
+    public static int makeRandomMove(Grid board) {
+        ArrayList<Integer> emptySpaces = getEmtpySpaces(board);
+        int rnd = new Random().nextInt(emptySpaces.size());
+        return emptySpaces.get(rnd);
+    }
+
+    private static ArrayList<Integer> getEmtpySpaces(Grid board) {
+        ArrayList<Integer> emptySpaces = new ArrayList<Integer>();
+        for (int i = 0; i < 9; i++) {
+            if (board.grid.get(i).getCurrentState() == GridSpace.State.EMPTY) {
+                emptySpaces.add(board.grid.get(i).getIdentifier());
+            }
+        }
+        return emptySpaces;
+    }
+
+    public static int translateCharToGridSpaceIdentifier(char move) {
+        if (move == '1') {
+            return 0;
+        } else if (move == '2') {
+            return 1;
+        } else if (move == '3') {
+            return 2;
+        } else if (move == '4') {
+            return 3;
+        } else if (move == '5') {
+            return 4;
+        } else if (move == '6') {
+            return 5;
+        } else if (move == '7') {
+            return 6;
+        } else if (move == '8') {
+            return 7;
+        } else {
+            return 8;
+        }
+    }
+
+
 }

@@ -30,6 +30,8 @@ public class TicTacToe {
 
     public static boolean isPlayer1Turn;
 
+    public static boolean isPVComp;
+
     private static final Font typicalFont = new Font("Arial", Font.PLAIN, 20);
     private static final EmptyBorder padding = new EmptyBorder(10, 10, 10, 10);
 
@@ -120,6 +122,19 @@ public class TicTacToe {
                     } else {
                         message.setText("That space is already taken! Try again.");
                     }
+
+
+                    if (isPVComp && !gameOver){
+                        if (player2.isSmartComputer()) {
+                            char move = GameAnalyzer.makeSmartMove(board);
+                            int identifer = GameAnalyzer.translateCharToGridSpaceIdentifier(move);
+
+                        } else {
+                            int identifier = GameAnalyzer.makeRandomMove(board);
+
+                        }
+                     }
+
                     game.update(game.getGraphics());
                 }
                 game.update(game.getGraphics());
@@ -189,6 +204,7 @@ public class TicTacToe {
     }
 
     public static boolean configPVP() {
+        isPVComp = false;
         String player1Name = JOptionPane.showInputDialog(null, "Enter Player 1's Name.", "",
                 JOptionPane.QUESTION_MESSAGE, null,null,"Player 1").toString();
         if (player1Name == null) return false;
@@ -228,6 +244,7 @@ public class TicTacToe {
     }
 
     public static boolean configPVComp() {
+        isPVComp = true;
         String player1Name = JOptionPane.showInputDialog(null, "Enter Player's Name.", JOptionPane.QUESTION_MESSAGE);
         if (player1Name == null) return false;
 

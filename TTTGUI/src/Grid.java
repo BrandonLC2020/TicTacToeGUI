@@ -8,7 +8,11 @@ public class Grid extends JPanel {
 
     public ArrayList<GridSpace> grid;
 
-
+    /*
+    0 1 2
+    3 4 5
+    6 7 8
+     */
     public Grid() {
         super();
         grid = new ArrayList<GridSpace>();
