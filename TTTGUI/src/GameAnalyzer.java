@@ -112,7 +112,6 @@ public class GameAnalyzer {
         return diaStr.toString();
     }
 
-
     public static boolean gameOver(Grid board) {
         return isWinO(board) || isWinX(board) || isDraw(board);
     }
@@ -189,8 +188,7 @@ public class GameAnalyzer {
         }
     }
 
-    public static int[] computerOffense(Grid board)
-    {
+    public static int[] computerOffense(Grid board) {
         //returns smart move for offense AND the number of moves until that happens
         char[][] currCharGrid = getCharGrid(board);
         String[] allSpaces = new String[] {getRow(currCharGrid, 0), getRow(currCharGrid, 1),
@@ -352,8 +350,7 @@ public class GameAnalyzer {
         return wiseMove;
     }
 
-    public int[] computerDefense(Grid board)
-    {
+    public int[] computerDefense(Grid board) {
         //returns smart move for defense AND the number of moves until that happens
         char[][] currCharGrid = getCharGrid(board);
         String[] allSpaces = new String[] {getRow(currCharGrid, 0), getRow(currCharGrid, 1),
