@@ -350,7 +350,7 @@ public class GameAnalyzer {
         return wiseMove;
     }
 
-    public int[] computerDefense(Grid board) {
+    public static int[] computerDefense(Grid board) {
         //returns smart move for defense AND the number of moves until that happens
         char[][] currCharGrid = getCharGrid(board);
         String[] allSpaces = new String[] {getRow(currCharGrid, 0), getRow(currCharGrid, 1),
@@ -511,5 +511,97 @@ public class GameAnalyzer {
             wiseMove[0] = minIndex;  //used to determine where to make the move (row, column, diagonal
         }
         return wiseMove;
+    }
+
+    private static char findEmpty(Grid board) {
+        char[][] currCharGrid = getCharGrid(board);
+        char empty = ' ';
+        for(int r = 0; r < 3; r++) {
+            for(int c = 0; c < 3; c++) {
+                if((currCharGrid[r][c] != 'X') && (currCharGrid[r][c] != 'O')) {
+                    empty = currCharGrid[r][c];
+                    break;
+                }
+            }
+        }
+        return empty;
+    }
+
+    public static char makeSmartMove(Grid board) {
+        char[][] currCharGrid = getCharGrid(board);
+        int[] offense = computerOffense(board);
+        int[] defense = computerDefense(board);
+        int smartMove = 0;
+        char move = ' ';
+        if(offense[1] == 0) {
+            smartMove = 8;
+        } else if(defense[1] < offense[1]) { //compares the number of moves away from a win in each array
+            smartMove = defense[0];
+        } else {
+            smartMove = offense[0];
+        }
+
+        if(smartMove == 0) {
+            for(int c = 0; c < 3; c++) {
+                if((currCharGrid[0][c] != 'X') && (currCharGrid[0][c] != 'O')) {
+                    move = currCharGrid[0][c];
+                    break;
+                }
+            }
+        } else if(smartMove == 1) {
+            for(int c = 0; c < 3; c++) {
+                if((currCharGrid[1][c] != 'X') && (currCharGrid[1][c] != 'O')) {
+                    move = currCharGrid[1][c];
+                    break;
+                }
+            }
+        } else if(smartMove == 2) {
+            for(int c = 0; c < 3; c++) {
+                if((currCharGrid[2][c] != 'X') && (currCharGrid[2][c] != 'O')) {
+                    move = currCharGrid[2][c];
+                    break;
+                }
+            }
+        } else if(smartMove == 3) {
+            for(int r = 0; r < 3; r++) {
+                if((currCharGrid[r][0] != 'X') && (currCharGrid[r][0] != 'O')) {
+                    move = currCharGrid[r][0];
+                    break;
+                }
+            }
+        } else if(smartMove == 4) {
+            for(int r = 0; r < 3; r++) {
+                if((currCharGrid[r][1] != 'X') && (currCharGrid[r][1] != 'O')) {
+                    move = currCharGrid[r][1];
+                    break;
+                }
+            }
+        } else if(smartMove == 5) {
+            for(int r = 0; r < 3; r++) {
+                if((currCharGrid[r][2] != 'X') && (currCharGrid[r][2] != 'O')) {
+                    move = currCharGrid[r][2];
+                    break;
+                }
+            }
+        } else if(smartMove == 6) {
+            if((currCharGrid[0][0] != 'X') && (currCharGrid[0][0] != 'O')) {
+                move = currCharGrid[0][0];
+            } else if((currCharGrid[1][1] != 'X') && (currCharGrid[1][1] != 'O')) {
+                move = currCharGrid[1][1];
+            } else if((currCharGrid[2][2] != 'X') && (currCharGrid[2][2] != 'O')) {
+                move = currCharGrid[2][2];
+            }
+        } else if(smartMove == 7) {
+            if((currCharGrid[0][2] != 'X') && (currCharGrid[0][2] != 'O')) {
+                move = currCharGrid[0][2];
+            } else if((currCharGrid[1][1] != 'X') && (currCharGrid[1][1] != 'O')) {
+                move = currCharGrid[1][1];
+            } else if((currCharGrid[2][0] != 'X') && (currCharGrid[2][0] != 'O')) {
+                move = currCharGrid[2][0];
+            }
+        } else {
+            move = findEmpty(board);
+        }
+        return move;
     }
 }
