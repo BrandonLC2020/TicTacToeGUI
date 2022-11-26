@@ -123,7 +123,6 @@ public class TicTacToe {
                         message.setText("That space is already taken! Try again.");
                     }
 
-
                     if (isPVComp && !GameAnalyzer.gameOver(board)){
                         if (player2.isSmartComputer()) {
                             char move = GameAnalyzer.makeSmartMove(board);
