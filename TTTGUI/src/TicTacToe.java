@@ -144,7 +144,7 @@ public class TicTacToe {
                             compButton.setCurrentState(compNewState);
                             compButton.setText(compMark);
                             board.updateGrid(identifier, compButton);
-
+                            isPlayer1Turn = !isPlayer1Turn;
                             if (GameAnalyzer.gameOver(board)) {
                                 if (GameAnalyzer.isWinX(board)) {
                                     String playerName = "";
@@ -205,7 +205,7 @@ public class TicTacToe {
                             compButton.setCurrentState(compNewState);
                             compButton.setText(compMark);
                             board.updateGrid(identifier, compButton);
-
+                            isPlayer1Turn = !isPlayer1Turn;
                             if (GameAnalyzer.gameOver(board)) {
                                 if (GameAnalyzer.isWinX(board)) {
                                     String playerName = "";
