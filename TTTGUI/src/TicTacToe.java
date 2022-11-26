@@ -124,14 +124,130 @@ public class TicTacToe {
                     }
 
 
-                    if (isPVComp && !gameOver){
+                    if (isPVComp && !GameAnalyzer.gameOver(board)){
                         if (player2.isSmartComputer()) {
                             char move = GameAnalyzer.makeSmartMove(board);
-                            int identifer = GameAnalyzer.translateCharToGridSpaceIdentifier(move);
+                            int identifier = GameAnalyzer.translateCharToGridSpaceIdentifier(move);
 
+                            GridSpace compButton = board.grid.get(identifier);
+
+                            String compMark = "";
+                            if (player2.isX()) compMark = "X";
+                            else compMark = "O";
+
+                            GridSpace.State compNewState = GridSpace.State.EMPTY;
+                            if (compMark.equals("X")) {
+                                compNewState = GridSpace.State.X;
+                            } else {
+                                compNewState = GridSpace.State.O;
+                            }
+                            compButton.setCurrentState(compNewState);
+                            compButton.setText(compMark);
+                            board.updateGrid(identifier, compButton);
+
+                            if (GameAnalyzer.gameOver(board)) {
+                                if (GameAnalyzer.isWinX(board)) {
+                                    String playerName = "";
+                                    if (player1.isX()) {
+                                        playerName = "" + player1.getName();
+                                        player1.setNumWins(player1.getNumWins() + 1);
+                                        player2.setNumLosses(player2.getNumLosses() + 1);
+                                        player1Wins.setText(player1.getNumWins() + " Wins");
+                                        player2Losses.setText(player2.getNumLosses() + " Losses");
+                                    } else {
+                                        playerName = player2.getName();
+                                        player2.setNumWins(player2.getNumWins() + 1);
+                                        player1.setNumLosses(player1.getNumLosses() + 1);
+                                        player2Wins.setText(player2.getNumWins() + " Wins");
+                                        player1Losses.setText(player1.getNumLosses() + " Losses");
+                                    }
+                                    message.setText("Game over. " + playerName + " won the game!");
+                                } else if (GameAnalyzer.isWinO(board)) {
+                                    String playerName = "";
+                                    if (!player1.isX()) {
+                                        playerName = "" + player1.getName();
+                                        player1.setNumWins(player1.getNumWins() + 1);
+                                        player2.setNumLosses(player2.getNumLosses() + 1);
+                                        player1Wins.setText(player1.getNumWins() + " Wins");
+                                        player2Losses.setText(player2.getNumLosses() + " Losses");
+                                    } else {
+                                        playerName = player2.getName();
+                                        player2.setNumWins(player2.getNumWins() + 1);
+                                        player1.setNumLosses(player1.getNumLosses() + 1);
+                                        player2Wins.setText(player2.getNumWins() + " Wins");
+                                        player1Losses.setText(player1.getNumLosses() + " Losses");
+                                    }
+                                    message.setText("Game over. " + playerName + " won the game!");
+                                } else { //must be a draw
+                                    message.setText("Game over. It's a draw!");
+                                    player1.setNumDraws(player1.getNumDraws() + 1);
+                                    player2.setNumDraws(player2.getNumDraws() + 1);
+                                    player1Draws.setText(player1.getNumDraws() + " Draws");
+                                    player2Draws.setText(player2.getNumDraws() + " Draws");
+                                }
+                            }
+                            game.update(game.getGraphics());
                         } else {
                             int identifier = GameAnalyzer.makeRandomMove(board);
 
+                            GridSpace compButton = board.grid.get(identifier);
+
+                            String compMark = "";
+                            if (player2.isX()) compMark = "X";
+                            else compMark = "O";
+
+                            GridSpace.State compNewState = GridSpace.State.EMPTY;
+                            if (compMark.equals("X")) {
+                                compNewState = GridSpace.State.X;
+                            } else {
+                                compNewState = GridSpace.State.O;
+                            }
+                            compButton.setCurrentState(compNewState);
+                            compButton.setText(compMark);
+                            board.updateGrid(identifier, compButton);
+
+                            if (GameAnalyzer.gameOver(board)) {
+                                if (GameAnalyzer.isWinX(board)) {
+                                    String playerName = "";
+                                    if (player1.isX()) {
+                                        playerName = "" + player1.getName();
+                                        player1.setNumWins(player1.getNumWins() + 1);
+                                        player2.setNumLosses(player2.getNumLosses() + 1);
+                                        player1Wins.setText(player1.getNumWins() + " Wins");
+                                        player2Losses.setText(player2.getNumLosses() + " Losses");
+                                    } else {
+                                        playerName = player2.getName();
+                                        player2.setNumWins(player2.getNumWins() + 1);
+                                        player1.setNumLosses(player1.getNumLosses() + 1);
+                                        player2Wins.setText(player2.getNumWins() + " Wins");
+                                        player1Losses.setText(player1.getNumLosses() + " Losses");
+                                    }
+                                    message.setText("Game over. " + playerName + " won the game!");
+                                } else if (GameAnalyzer.isWinO(board)) {
+                                    String playerName = "";
+                                    if (!player1.isX()) {
+                                        playerName = "" + player1.getName();
+                                        player1.setNumWins(player1.getNumWins() + 1);
+                                        player2.setNumLosses(player2.getNumLosses() + 1);
+                                        player1Wins.setText(player1.getNumWins() + " Wins");
+                                        player2Losses.setText(player2.getNumLosses() + " Losses");
+                                    } else {
+                                        playerName = player2.getName();
+                                        player2.setNumWins(player2.getNumWins() + 1);
+                                        player1.setNumLosses(player1.getNumLosses() + 1);
+                                        player2Wins.setText(player2.getNumWins() + " Wins");
+                                        player1Losses.setText(player1.getNumLosses() + " Losses");
+                                    }
+                                    message.setText("Game over. " + playerName + " won the game!");
+                                } else { //must be a draw
+                                    message.setText("Game over. It's a draw!");
+                                    player1.setNumDraws(player1.getNumDraws() + 1);
+                                    player2.setNumDraws(player2.getNumDraws() + 1);
+                                    player1Draws.setText(player1.getNumDraws() + " Draws");
+                                    player2Draws.setText(player2.getNumDraws() + " Draws");
+                                }
+                            }
+                            game.update(game.getGraphics());
                         }
                      }
 
@@ -245,7 +361,8 @@ public class TicTacToe {
 
     public static boolean configPVComp() {
         isPVComp = true;
-        String player1Name = JOptionPane.showInputDialog(null, "Enter Player's Name.", JOptionPane.QUESTION_MESSAGE);
+        String player1Name = JOptionPane.showInputDialog(null, "Enter Player 1's Name.", "",
+                JOptionPane.QUESTION_MESSAGE, null,null,"Player 1").toString();
         if (player1Name == null) return false;
 
         String[] markOptions = { "O", "X" };
