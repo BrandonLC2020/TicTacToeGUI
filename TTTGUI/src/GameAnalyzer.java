@@ -643,6 +643,4 @@ public class GameAnalyzer {
             return 8;
         }
     }
-
-
 }
