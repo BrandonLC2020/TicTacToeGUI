@@ -11,6 +11,7 @@ public class Player {
     public Player(String name, boolean isComputer, boolean isSmartComputer, boolean isX, boolean starts) {
         this.name = name;
         this.isComputer = isComputer;
+        this.isSmartComputer = isSmartComputer;
         this.isX = isX;
         this.starts = starts;
         this.numWins = 0;

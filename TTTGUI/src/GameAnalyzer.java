@@ -530,6 +530,15 @@ public class GameAnalyzer {
 
     public static char makeSmartMove(Grid board) {
         char[][] currCharGrid = getCharGrid(board);
+
+        System.out.println("Current Board\n");
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.print(currCharGrid[i][j] + ' ');
+            }
+            System.out.println();
+        }
+
         int[] offense = computerOffense(board);
         int[] defense = computerDefense(board);
         int smartMove = 0;
@@ -607,6 +616,7 @@ public class GameAnalyzer {
     }
 
     public static int makeRandomMove(Grid board) {
+        //System.out.println("made it here");
         ArrayList<Integer> emptySpaces = getEmptySpaces(board);
         int rnd = new Random().nextInt(emptySpaces.size());
         return emptySpaces.get(rnd);

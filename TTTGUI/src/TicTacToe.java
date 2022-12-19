@@ -123,10 +123,12 @@ public class TicTacToe {
                     }
 
                     if (isPVComp && !GameAnalyzer.gameOver(board)){
+                        //System.out.println("made it here");
                         if (player2.isSmartComputer()) {
+                            //System.out.println("made it here too");
                             char move = GameAnalyzer.makeSmartMove(board);
                             int identifier = GameAnalyzer.translateCharToGridSpaceIdentifier(move);
-
+                            System.out.println(move);
                             GridSpace compButton = board.grid.get(identifier);
 
                             String compMark = "";
@@ -366,7 +368,7 @@ public class TicTacToe {
         String[] markOptions = { "O", "X" };
         boolean player1IsX;
         int player1Mark = JOptionPane.showOptionDialog(null, "Choose Player's Mark.", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, markOptions, markOptions[0]);
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, markOptions, null);
         if (player1Mark == 0) {
             player1IsX = false;
         } else if (player1Mark == 1) {
@@ -378,7 +380,8 @@ public class TicTacToe {
         String[] compOptions = {"Smart", "Normal"};
         boolean isSmartComputer;
         int compLevel = JOptionPane.showOptionDialog(null, "Choose Computer's Level.", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, compOptions, compOptions[0]);
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, compOptions, null);
+        System.out.println(compLevel);
         if (compLevel == 0) {
             isSmartComputer = true;
         } else if (compLevel == 1) {
@@ -388,20 +391,20 @@ public class TicTacToe {
         }
 
         String[] startOptions = { "Computer", "Player" };
-        boolean playerStarts;
+        boolean player1Starts;
         int startingPlayer = JOptionPane.showOptionDialog(null, "Which Player Goes First?", "",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, startOptions, startOptions[0]);
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, startOptions, null);
         if (startingPlayer == 0) {
-            playerStarts = false;
+            player1Starts = false;
         } else if (startingPlayer == 1) {
-            playerStarts = true;
+            player1Starts = true;
         } else {
             return false;
         }
 
-        isPlayer1Turn = playerStarts;
-        player1 = new Player(player1Name, false, false, player1IsX, playerStarts);
-        player2 = new Player("Computer", true, isSmartComputer, !player1IsX, !playerStarts);
+        isPlayer1Turn = player1Starts;
+        player1 = new Player(player1Name, false, false, player1IsX, player1Starts);
+        player2 = new Player("Computer", true, isSmartComputer, !player1IsX, !player1Starts);
 
         return true;
     }
