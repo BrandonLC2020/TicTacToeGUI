@@ -607,12 +607,12 @@ public class GameAnalyzer {
     }
 
     public static int makeRandomMove(Grid board) {
-        ArrayList<Integer> emptySpaces = getEmtpySpaces(board);
+        ArrayList<Integer> emptySpaces = getEmptySpaces(board);
         int rnd = new Random().nextInt(emptySpaces.size());
         return emptySpaces.get(rnd);
     }
 
-    private static ArrayList<Integer> getEmtpySpaces(Grid board) {
+    private static ArrayList<Integer> getEmptySpaces(Grid board) {
         ArrayList<Integer> emptySpaces = new ArrayList<Integer>();
         for (int i = 0; i < 9; i++) {
             if (board.grid.get(i).getCurrentState() == GridSpace.State.EMPTY) {
