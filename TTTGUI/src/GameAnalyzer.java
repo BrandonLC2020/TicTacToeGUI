@@ -107,7 +107,7 @@ public class GameAnalyzer {
 
     private static String getDiagonal2(char[][] currCharGrid) {
         StringBuilder diaStr = new StringBuilder();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             diaStr.append(currCharGrid[i][2 - i]);
         }
         return diaStr.toString();
