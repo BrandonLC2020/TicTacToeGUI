@@ -125,10 +125,10 @@ public class TicTacToe {
                     if (isPVComp && !GameAnalyzer.gameOver(board)){
                         //System.out.println("made it here");
                         if (player2.isSmartComputer()) {
-                            //System.out.println("made it here too");
+                            System.out.println("made it here too");
                             char move = GameAnalyzer.makeSmartMove(board);
                             int identifier = GameAnalyzer.translateCharToGridSpaceIdentifier(move);
-                            System.out.println(move);
+                            //System.out.println(move);
                             GridSpace compButton = board.grid.get(identifier);
 
                             String compMark = "";
@@ -185,6 +185,8 @@ public class TicTacToe {
                                     player1Draws.setText(player1.getNumDraws() + " Draws");
                                     player2Draws.setText(player2.getNumDraws() + " Draws");
                                 }
+                            } else {
+
                             }
                             game.update(game.getGraphics());
                         } else {

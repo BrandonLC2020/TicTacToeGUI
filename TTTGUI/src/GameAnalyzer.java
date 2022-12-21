@@ -75,7 +75,7 @@ public class GameAnalyzer {
     private static String getDiagonal2(Grid board) {
         char[][] currCharGrid = getCharGrid(board);
         StringBuilder diaStr = new StringBuilder();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             diaStr.append(currCharGrid[i][2 - i]);
         }
         return diaStr.toString();
@@ -531,12 +531,12 @@ public class GameAnalyzer {
     public static char makeSmartMove(Grid board) {
         char[][] currCharGrid = getCharGrid(board);
 
-        System.out.println("Current Board\n");
+        //System.out.println("Current Board\n");
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
-                System.out.print(currCharGrid[i][j] + ' ');
+                //System.out.print(currCharGrid[i][j] + ' ');
             }
-            System.out.println();
+            //System.out.println();
         }
 
         int[] offense = computerOffense(board);
