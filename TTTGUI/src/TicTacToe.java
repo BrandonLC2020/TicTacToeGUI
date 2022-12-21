@@ -125,7 +125,7 @@ public class TicTacToe {
                     if (isPVComp && !GameAnalyzer.gameOver(board)){
                         //System.out.println("made it here");
                         if (player2.isSmartComputer()) {
-                            System.out.println("made it here too");
+                            //System.out.println("made it here too");
                             int move = GameAnalyzer.makeSmartMove(board);
                             int identifier = move;
                             //System.out.println(move);
