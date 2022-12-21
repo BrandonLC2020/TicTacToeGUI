@@ -514,13 +514,13 @@ public class GameAnalyzer {
         return wiseMove;
     }
 
-    private static char findEmpty(Grid board) {
+    private static int findEmpty(Grid board) {
         char[][] currCharGrid = getCharGrid(board);
-        char empty = ' ';
+        int empty = ' ';
         for(int r = 0; r < 3; r++) {
             for(int c = 0; c < 3; c++) {
                 if((currCharGrid[r][c] != 'X') && (currCharGrid[r][c] != 'O')) {
-                    empty = currCharGrid[r][c];
+                    empty = (r*3) + c;
                     break;
                 }
             }
@@ -528,7 +528,7 @@ public class GameAnalyzer {
         return empty;
     }
 
-    public static char makeSmartMove(Grid board) {
+    public static int makeSmartMove(Grid board) {
         char[][] currCharGrid = getCharGrid(board);
 
         //System.out.println("Current Board\n");
@@ -542,7 +542,7 @@ public class GameAnalyzer {
         int[] offense = computerOffense(board);
         int[] defense = computerDefense(board);
         int smartMove = 0;
-        char move = ' ';
+        int move = ' ';
         if(offense[1] == 0) {
             smartMove = 8;
         } else if(defense[1] < offense[1]) { //compares the number of moves away from a win in each array
@@ -554,60 +554,63 @@ public class GameAnalyzer {
         if(smartMove == 0) {
             for(int c = 0; c < 3; c++) {
                 if((currCharGrid[0][c] != 'X') && (currCharGrid[0][c] != 'O')) {
-                    move = currCharGrid[0][c];
+                    //move = currCharGrid[0][c];
+                    move = c;
                     break;
                 }
             }
         } else if(smartMove == 1) {
             for(int c = 0; c < 3; c++) {
                 if((currCharGrid[1][c] != 'X') && (currCharGrid[1][c] != 'O')) {
-                    move = currCharGrid[1][c];
+                    //move = currCharGrid[1][c];
+                    move = c;
                     break;
                 }
             }
         } else if(smartMove == 2) {
             for(int c = 0; c < 3; c++) {
                 if((currCharGrid[2][c] != 'X') && (currCharGrid[2][c] != 'O')) {
-                    move = currCharGrid[2][c];
+                    //move = currCharGrid[2][c];
+                    move = c;
                     break;
                 }
             }
         } else if(smartMove == 3) {
             for(int r = 0; r < 3; r++) {
                 if((currCharGrid[r][0] != 'X') && (currCharGrid[r][0] != 'O')) {
-                    move = currCharGrid[r][0];
+                    move = r * 3;
                     break;
                 }
             }
         } else if(smartMove == 4) {
             for(int r = 0; r < 3; r++) {
                 if((currCharGrid[r][1] != 'X') && (currCharGrid[r][1] != 'O')) {
-                    move = currCharGrid[r][1];
+                    move = 1 + (r * 3);
                     break;
                 }
             }
         } else if(smartMove == 5) {
             for(int r = 0; r < 3; r++) {
                 if((currCharGrid[r][2] != 'X') && (currCharGrid[r][2] != 'O')) {
-                    move = currCharGrid[r][2];
+                    move = 2 + (r * 3);
                     break;
                 }
             }
         } else if(smartMove == 6) {
             if((currCharGrid[0][0] != 'X') && (currCharGrid[0][0] != 'O')) {
-                move = currCharGrid[0][0];
+                move = 0;
             } else if((currCharGrid[1][1] != 'X') && (currCharGrid[1][1] != 'O')) {
-                move = currCharGrid[1][1];
+                move = 4;
             } else if((currCharGrid[2][2] != 'X') && (currCharGrid[2][2] != 'O')) {
-                move = currCharGrid[2][2];
+                move = 8;
             }
         } else if(smartMove == 7) {
             if((currCharGrid[0][2] != 'X') && (currCharGrid[0][2] != 'O')) {
-                move = currCharGrid[0][2];
+                move = 2;
             } else if((currCharGrid[1][1] != 'X') && (currCharGrid[1][1] != 'O')) {
-                move = currCharGrid[1][1];
+                move = 4;
             } else if((currCharGrid[2][0] != 'X') && (currCharGrid[2][0] != 'O')) {
-                move = currCharGrid[2][0];
+                move = 6;
             }
         } else {
             move = findEmpty(board);
@@ -630,27 +633,5 @@ public class GameAnalyzer {
             }
         }
         return emptySpaces;
-    }
-
-    public static int translateCharToGridSpaceIdentifier(char move) {
-        if (move == '1') {
-            return 0;
-        } else if (move == '2') {
-            return 1;
-        } else if (move == '3') {
-            return 2;
-        } else if (move == '4') {
-            return 3;
-        } else if (move == '5') {
-            return 4;
-        } else if (move == '6') {
-            return 5;
-        } else if (move == '7') {
-            return 6;
-        } else if (move == '8') {
-            return 7;
-        } else {
-            return 8;
-        }
     }
 }
