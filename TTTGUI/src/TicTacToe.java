@@ -185,8 +185,6 @@ public class TicTacToe {
                                     player1Draws.setText(player1.getNumDraws() + " Draws");
                                     player2Draws.setText(player2.getNumDraws() + " Draws");
                                 }
-                            } else {
-
                             }
                             game.update(game.getGraphics());
                         } else {
@@ -251,7 +249,7 @@ public class TicTacToe {
                             }
                             game.update(game.getGraphics());
                         }
-                     }
+                    }
 
                     game.update(game.getGraphics());
                 }
@@ -267,6 +265,60 @@ public class TicTacToe {
                     } else {
                         message.setText("NEW GAME! It's " + player2.getName() + "'s turn.");
                     }
+
+                    if (isPVComp && !GameAnalyzer.gameOver(board) && !isPlayer1Turn){
+                        System.out.println("made it here");
+                        if (player2.isSmartComputer()) {
+                            //System.out.println("made it here too");
+                            int move = GameAnalyzer.makeSmartMove(board);
+                            int identifier = move;
+                            //System.out.println(move);
+                            GridSpace compButton = board.grid.get(identifier);
+
+                            String compMark = "";
+                            if (player2.isX()) compMark = "X";
+                            else compMark = "O";
+
+                            GridSpace.State compNewState = GridSpace.State.EMPTY;
+                            if (compMark.equals("X")) {
+                                compNewState = GridSpace.State.X;
+                            } else {
+                                compNewState = GridSpace.State.O;
+                            }
+                            compButton.setCurrentState(compNewState);
+                            compButton.setText(compMark);
+                            board.updateGrid(identifier, compButton);
+                            isPlayer1Turn = !isPlayer1Turn;
+
+                            game.update(game.getGraphics());
+                        } else {
+                            int identifier = GameAnalyzer.makeRandomMove(board);
+
+                            GridSpace compButton = board.grid.get(identifier);
+
+                            String compMark = "";
+                            if (player2.isX()) compMark = "X";
+                            else compMark = "O";
+
+                            GridSpace.State compNewState = GridSpace.State.EMPTY;
+                            if (compMark.equals("X")) {
+                                compNewState = GridSpace.State.X;
+                            } else {
+                                compNewState = GridSpace.State.O;
+                            }
+                            compButton.setCurrentState(compNewState);
+                            compButton.setText(compMark);
+                            board.updateGrid(identifier, compButton);
+                            board.update(board.getGraphics());
+
+                            isPlayer1Turn = !isPlayer1Turn;
+                            board.update(board.getGraphics());
+                            game.update(game.getGraphics());
+
+                        }
+                        message.setText("It's " + player1.getName() + "'s turn.");
+                    }
+
                     board.update(board.getGraphics());
                     game.update(game.getGraphics());
                 } else if (buttonAction == Action.Quit) {
